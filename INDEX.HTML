@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amor Diário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            margin: 10px 0;
+        }
+
+        input {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #response {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .happy {
+            color: green;
+        }
+
+        .sad {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="daily-message"></h1>
+        <h2>Você me ama? Quanto?</h2>
+        <input type="number" id="love-input" placeholder="Digite um número" />
+        <button onclick="checkLove()">Enviar</button>
+        <p id="response"></p>
+    </div>
+    <script>
+        // Mensagens diárias de amor
+        const messages = [
+            "Você é a luz da minha vida!",
+            "Eu te amo mais do que palavras podem expressar!",
+            "Você faz meus dias mais felizes.",
+            "Meu amor por você cresce a cada dia.",
+            "Você é meu tudo!",
+            "Quando penso em você, meu coração sorri.",
+            "Meu amor por você é infinito.",
+            "Eu não sei o que seria de mim sem você.",
+            "Você é meu mundo inteiro!",
+            "Cada dia ao seu lado é especial.",
+            "Amo você mais do que chocolate!",
+            "Você ilumina meu universo.",
+            "Você é a melhor coisa que já aconteceu comigo.",
+            "Você é minha pessoa favorita.",
+            "Estar com você é um presente.",
+            "Você é meu porto seguro.",
+            "Eu te amo de todo o coração.",
+            "Você é meu grande amor.",
+            "Eu sou grato por você todos os dias.",
+            "Eu te amo mais do que as estrelas do céu!"
+        ];
+
+        // Mensagens para resultados maiores que 5
+        const happyMessages = [
+            "Você me ama muito! Isso me faz tão feliz! 😊",
+            "Eu sempre soube que você me amava assim! ❤️",
+            "Você é a pessoa mais incrível do mundo! 😍",
+            "Eu sinto seu amor e é maravilhoso! 🥰",
+            "Cada dia com você é pura alegria! 😘",
+            "Nosso amor é tão lindo! ✨",
+            "Você é o motivo da minha felicidade! 💖",
+            "Não há limites para o nosso amor! 💕",
+            "Você faz meu coração transbordar! 💓",
+            "Eu te amo ainda mais agora! 💌",
+            "Eu sou o mais sortudo por ter você! 🌟",
+            "Você é meu sol em qualquer tempestade! 🌞",
+            "Amar você é fácil porque você é perfeito! 🌹",
+            "Eu sempre vou te amar mais! 🦋",
+            "Você é a melhor coisa da minha vida! 🌈",
+            "Meu coração explode de amor por você! 🧡",
+            "O amor que temos é único! 💍",
+            "Você é minha alma gêmea! 🫂",
+            "Eu amo você infinitamente! ♾️",
+            "Você é meu tudo! 💯"
+        ];
+
+        // Mensagens para resultados menores ou iguais a 5
+        const sadMessages = [
+            "Ah não! Isso me deixou triste... 😢",
+            "Será que podemos melhorar isso? 🥺",
+            "Eu esperava um pouco mais... 😔",
+            "Ah, não me deixa triste assim! 😭",
+            "Vamos conversar sobre isso... 🫤",
+            "Meu coração está um pouco apertado... 💔",
+            "Será que estou te amando mais? 🥹",
+            "Isso não parece justo... 😟",
+            "Eu sei que podemos nos amar mais! 💞",
+            "Talvez um abraço ajude... 🤗",
+            "Eu ainda acredito em nós! 🌼",
+            "Amor, você está bem? 🥲",
+            "Meu coração precisa de mais amor... 💔",
+            "Ah, vamos melhorar isso juntos? ✨",
+            "Será que você quer me contar algo? 🧐",
+            "Eu sempre vou te amar, mesmo assim... 💌",
+            "Vamos construir algo mais forte! 🌱",
+            "Talvez amanhã seja um número maior? 🌞",
+            "Isso dói um pouco... 🥀",
+            "Eu acredito que nosso amor pode crescer! 🌸"
+        ];
+
+        // Exibe uma mensagem diária aleatória
+        function showDailyMessage() {
+            const today = new Date().getDate();
+            const message = messages[today % messages.length];
+            document.getElementById("daily-message").textContent = message;
+        }
+
+        // Verifica o valor inserido e escolhe uma mensagem aleatória
+        function checkLove() {
+            const input = document.getElementById("love-input").value;
+            const response = document.getElementById("response");
+
+            if (input === "") {
+                response.textContent = "Por favor, insira um número!";
+                response.className = "";
+            } else if (Number(input) > 5) {
+                const randomMessage = happyMessages[Math.floor(Math.random() * happyMessages.length)];
+                response.textContent = randomMessage;
+                response.className = "happy";
+            } else {
+                const randomMessage = sadMessages[Math.floor(Math.random() * sadMessages.length)];
+                response.textContent = randomMessage;
+                response.className = "sad";
+            }
+        }
+
+        // Inicializa a mensagem do dia
+        showDailyMessage();
+    </script>
+</body>
+</html>
